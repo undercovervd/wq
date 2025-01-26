@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Weird Queers Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7bbf, #6495ed); /* Pink and blue gradient */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.8); /* Milk see-through card */
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .btn-logout {
+            padding: 10px 20px;
+            background-color: #ff7bbf;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-logout:hover {
+            background-color: #6495ed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="userCard">
+        <h1>Welcome</h1>
+        <p id="userName">Loading...</p> <!-- This will show the user's name -->
+        <button class="btn-logout" id="logoutBtn">Logout</button>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js"></script>
+    <script>
+        // Your Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDELZPdzHm5f7fx_q0PpJ8fkn_l4kH6peA",
+            authDomain: "wqmanager-e2440.firebaseapp.com",
+            projectId: "wqmanager-e2440",
+            storageBucket: "wqmanager-e2440.firebasestorage.app",
+            messagingSenderId: "67581490135",
+            appId: "1:67581490135:web:5530562258c82b16d49192",
+            measurementId: "G-G2YSPQKBL7"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Check if user is signed in
+        auth.onAuthStateChanged(user => {
+            const userName = document.getElementById('userName');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (user) {
+                // Display user's name
+                userName.textContent = `Hello, ${user.displayName || 'User'}!`;
+
+                // Set up logout button
+                logoutBtn.addEventListener('click', () => {
+                    auth.signOut().then(() => {
+                        window.location.href = 'index.html'; // Redirect to login page after logout
+                    });
+                });
+            } else {
+                userName.textContent = 'Please log in.';
+                logoutBtn.style.display = 'none'; // Hide logout button if not logged in
+            }
+        });
+    </script>
+</body>
+</html>
