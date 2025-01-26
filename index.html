@@ -6,23 +6,12 @@
   <title>Weird Queers Manager</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Import Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js"></script>
-</head>
-<body>
-  <div class="card">
-    <h1>Weird Queers Manager</h1>
-    <button id="google-login-btn">Log in with Google</button>
-    <button id="test-btn">Open Random Popup</button>
-  </div>
-
-  <!-- Add your Firebase config and authentication script -->
   <script type="module">
-    import { initializeApp } from "firebase/app";
-    import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-    import { getAnalytics } from "firebase/analytics";
-
+    // Firebase imports for using ES Modules in the browser
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js";
+  
     // Your Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDELZPdzHm5f7fx_q0PpJ8fkn_l4kH6peA",
@@ -55,7 +44,7 @@
     });
 
     // Test button for random popup
-    document.getElementById("test-btn").addEventListener("click", () => {
+    document.getElementById("test-btn").addEventListener("click", function() {
       // List of URLs for random popups
       const urls = [
         "https://www.google.com",
@@ -68,13 +57,20 @@
       const randomUrl = urls[Math.floor(Math.random() * urls.length)];
 
       // Open the random URL in a new window (popup)
-      // Ensure the popup is triggered by the click event
       const popup = window.open(randomUrl, "_blank", "width=600,height=400");
-      
-      if (!popup) {
+
+      // Check if popup is blocked
+      if (!popup || popup.closed || typeof popup.closed == 'undefined') {
         alert("Popup blocked! Please allow popups for this site.");
       }
     });
   </script>
+</head>
+<body>
+  <div class="card">
+    <h1>Weird Queers Manager</h1>
+    <button id="google-login-btn">Log in with Google</button>
+    <button id="test-btn">Open Random Popup</button>
+  </div>
 </body>
 </html>
