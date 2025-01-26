@@ -5,11 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weird Queers Manager</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Import Firebase SDK -->
+  <script type="module" defer>
+    // Firebase SDK Imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+    // Firebase configuration (replace with your Firebase project details)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Google Login Functionality
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginBtn = document.getElementById("google-login-btn");
+
+      loginBtn.addEventListener("click", () => {
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const user = result.user;
+            console.log("Logged in as:", user.displayName);
+            alert(`Welcome, ${user.displayName}!`);
+          })
+          .catch((error) => {
+            console.error("Login Error:", error.message);
+            alert("Failed to log in. Please try again.");
+          });
+      });
+    });
+  </script>
 </head>
 <body>
   <div class="card">
     <h1>Weird Queers Manager</h1>
-    <button>Login</button>
+    <button id="google-login-btn">Log in with Google</button>
   </div>
 </body>
 </html>
