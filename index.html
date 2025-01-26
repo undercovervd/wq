@@ -7,41 +7,42 @@
   <link rel="stylesheet" href="styles.css">
   <!-- Import Firebase SDK -->
   <script type="module" defer>
-    // Firebase SDK Imports
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+    // Import the functions you need from the SDKs
+    import { initializeApp } from "firebase/app";
+    import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+    import { getAnalytics } from "firebase/analytics";
 
-    // Firebase configuration (replace with your Firebase project details)
+    // Firebase config
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyDELZPdzHm5f7fx_q0PpJ8fkn_l4kH6peA",
+      authDomain: "wqmanager-e2440.firebaseapp.com",
+      projectId: "wqmanager-e2440",
+      storageBucket: "wqmanager-e2440.firebasestorage.app",
+      messagingSenderId: "67581490135",
+      appId: "1:67581490135:web:5530562258c82b16d49192",
+      measurementId: "G-G2YSPQKBL7"
     };
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+    const auth = getAuth(app); // Firebase Auth
+    const provider = new GoogleAuthProvider(); // Google Provider
+    const analytics = getAnalytics(app); // Analytics (optional)
 
-    // Google Login Functionality
-    document.addEventListener("DOMContentLoaded", () => {
-      const loginBtn = document.getElementById("google-login-btn");
-
-      loginBtn.addEventListener("click", () => {
-        signInWithPopup(auth, provider)
-          .then((result) => {
-            const user = result.user;
-            console.log("Logged in as:", user.displayName);
-            alert(`Welcome, ${user.displayName}!`);
-          })
-          .catch((error) => {
-            console.error("Login Error:", error.message);
-            alert("Failed to log in. Please try again.");
-          });
-      });
+    // Google Sign-In Function
+    document.getElementById("google-login-btn").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          // User signed in successfully
+          const user = result.user;
+          console.log("Logged in as:", user.displayName);
+          alert(`Welcome, ${user.displayName}!`);
+        })
+        .catch((error) => {
+          // Handle Errors
+          console.error("Login Error:", error.message);
+          alert("Failed to log in. Please try again.");
+        });
     });
   </script>
 </head>
