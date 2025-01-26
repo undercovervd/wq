@@ -6,13 +6,18 @@
   <title>Weird Queers Manager</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Import Firebase SDK -->
-  <script type="module" defer>
-    // Import the functions you need from the SDKs
-    import { initializeApp } from "firebase/app";
-    import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-    import { getAnalytics } from "firebase/analytics";
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js"></script>
+</head>
+<body>
+  <div class="card">
+    <h1>Weird Queers Manager</h1>
+    <button id="google-login-btn">Log in with Google</button>
+  </div>
 
-    // Firebase config
+  <script type="module">
+    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDELZPdzHm5f7fx_q0PpJ8fkn_l4kH6peA",
       authDomain: "wqmanager-e2440.firebaseapp.com",
@@ -24,32 +29,33 @@
     };
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app); // Firebase Auth
-    const provider = new GoogleAuthProvider(); // Google Provider
-    const analytics = getAnalytics(app); // Analytics (optional)
+    import { initializeApp } from "firebase/app";
+    import { getAuth, signInWithRedirect, GoogleAuthProvider, getRedirectResult } from "firebase/auth";
+    import { getAnalytics } from "firebase/analytics";
 
-    // Google Sign-In Function
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);  // Firebase Auth
+    const provider = new GoogleAuthProvider();  // Google Auth provider
+    const analytics = getAnalytics(app);  // Firebase Analytics (optional)
+
+    // Google Sign-In with Redirect
     document.getElementById("google-login-btn").addEventListener("click", () => {
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          // User signed in successfully
+      signInWithRedirect(auth, provider);
+    });
+
+    // Handle the result of the redirect
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result) {
           const user = result.user;
           console.log("Logged in as:", user.displayName);
           alert(`Welcome, ${user.displayName}!`);
-        })
-        .catch((error) => {
-          // Handle Errors
-          console.error("Login Error:", error.message);
-          alert("Failed to log in. Please try again.");
-        });
-    });
+        }
+      })
+      .catch((error) => {
+        console.error("Login Error:", error.message);
+        alert("Failed to log in. Please try again.");
+      });
   </script>
-</head>
-<body>
-  <div class="card">
-    <h1>Weird Queers Manager</h1>
-    <button id="google-login-btn">Log in with Google</button>
-  </div>
 </body>
 </html>
