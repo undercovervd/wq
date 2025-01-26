@@ -36,33 +36,14 @@
           const user = result.user;
           console.log("Logged in as:", user.displayName);
           alert(`Welcome, ${user.displayName}!`);
+          
+          // Redirect to home.html after successful login
+          window.location.href = "home.html";
         })
         .catch((error) => {
           console.error("Error signing in:", error.message);
           alert("Failed to log in. Please try again.");
         });
-    });
-
-    // Test button for random popup
-    document.getElementById("test-btn").addEventListener("click", function() {
-      // List of URLs for random popups
-      const urls = [
-        "https://www.google.com",
-        "https://www.reddit.com",
-        "https://www.youtube.com",
-        "https://www.github.com"
-      ];
-
-      // Select a random URL from the array
-      const randomUrl = urls[Math.floor(Math.random() * urls.length)];
-
-      // Open the random URL in a new window (popup)
-      const popup = window.open(randomUrl, "_blank", "width=600,height=400");
-
-      // Check if popup is blocked
-      if (!popup || popup.closed || typeof popup.closed == 'undefined') {
-        alert("Popup blocked! Please allow popups for this site.");
-      }
     });
   </script>
 </head>
@@ -70,7 +51,6 @@
   <div class="card">
     <h1>Weird Queers Manager</h1>
     <button id="google-login-btn">Log in with Google</button>
-    <button id="test-btn">Open Random Popup</button>
   </div>
 </body>
 </html>
